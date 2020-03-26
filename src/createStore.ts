@@ -1,46 +1,39 @@
-import { Action } from './types/actions';
+import { Action, AnyAction } from './types/actions';
 import { Reducer } from './types/reducers';
+import { Store, Unsubscribe } from './types/store';
+import { Dispatch } from './types/dispatch';
 
 export default function createStore<
   S,
-  A extends Action
+  A extends Action = AnyAction
 >(
   reducer: Reducer<S, A>,
-  initState: S
-) {
-
-  let currentState = initState;
-  let currentReducer = reducer;
-  let listeners = [];
-
-  function getState() {
-    return currentState;
+  initialStat: S
+): Store<S, A> {
+  if (typeof reducer !== 'function') {
+    throw new Error('expect reducer to be a function.');
   }
-
-  function subscribe(listener) {
-    listeners.push(listener);
-    return function name() {
-      const index = listener.findIndex(listener);
-      listeners.splice(index, 1);
-    }
+  
+  function getState(): S {
+    
   }
-
-  function dispatch(action) {
-    currentState = currentReducer(currentState, action);
-    listeners.slice().forEach(listener => listener());
-  }
-
-  function replaceReducer() {
+  
+  function dispatch(action: A) {
     
   }
 
-  // 这样 reducer 会走到 default 分支，也即返回初始值，生成最初的 state tree
-  dispatch({ types: '@@redux/INIT' });
+  function subscribe(listener: () => void): Unsubscribe {
+    
+  }
+
+  function replaceReducer<newState, newAction extends A>(nextReducer: Reducer<newState, newAction>) {
+    
+  }
 
   return {
     getState,
+    dispatch: dispatch as Dispatch<A>,
     subscribe,
-    dispatch,
-    replaceReducer,
+    replaceReducer
   }
 }
