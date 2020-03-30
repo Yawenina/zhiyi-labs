@@ -1,4 +1,6 @@
 import createStore from '../src/createStore';
+import * as reducers from './helpers/reducers';
+import { Reducer } from '../src/types/reducers';
 
 describe('createStore', () => {
   it('should expose public API', () => {
@@ -13,9 +15,23 @@ describe('createStore', () => {
 
   it('throw if reducer is not a function', () => {
     // expect 里调用 createStore 来捕捉
-    expect(() => createStore()).toThrow();
-    expect(() => createStore('test')).toThrow();
-    expect(() => createStore({})).toThrow();
+    // use as unknown, asReducer for type check
+    expect(() => createStore((undefined as unknown) as Reducer)).toThrow();
+    expect(() => createStore(('test' as unknown) as Reducer)).toThrow();
+    expect(() => createStore(({} as unknown) as Reducer)).toThrow();
     expect(() => createStore(() => {})).not.toThrow();
   });
+
+  // test getState & dispatch
+  it('should pass the initial action and initial state', () => {
+    const store = createStore(reducers.todo, [
+      { id: 1, text: 'Hello' }
+    ]);
+
+    expect(store.getState()).toEqual([
+      { id: 1, text: 'Hello' }
+    ])
+  });
+
+  
 })

@@ -1,5 +1,5 @@
 export interface Action<T = any> {
-  action: T
+  type: T
 }
 
 export interface AnyAction extends Action{
