@@ -27,3 +27,18 @@ export function todo(state: Todo[] = [], action: TodoAction) {
       return state;
   }
 }
+
+export function todosReverse(state: Todo[] = [], action: TodoAction) {
+  switch (action.type) {
+    case ADD_TODO:
+      return [
+        {
+          id: id(state),
+          text: action.text
+        },
+        ...state
+      ]
+    default:
+      return state
+  }
+}
