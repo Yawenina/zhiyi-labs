@@ -1,4 +1,4 @@
-import { ADD_TODO } from './actionTypes';
+import { ADD_TODO, GET_STATE_IN_MIDDLE, SUBSCRIBE_IN_MIDDLE, DISPATCH_IN_MIDDLE } from './actionTypes';
 import { AnyAction } from '../../src/types/actions';
 
 function id(state: {id: number}[]) {
@@ -40,5 +40,35 @@ export function todosReverse(state: Todo[] = [], action: TodoAction) {
       ]
     default:
       return state
+  }
+}
+
+export function getStateInTheMiddleOfReducer(state = [], action) {
+  switch (action.type) {
+    case GET_STATE_IN_MIDDLE:
+      action.boundGetStateFn();
+      return state;
+    default:
+      return state;
+  }
+}
+
+export function subscribeInTheMiddleOfReducer(state = [], action) {
+  switch (action.type) {
+    case SUBSCRIBE_IN_MIDDLE:
+      action.boundSubscribeFn();
+      return state;
+    default:
+      return state;
+  }
+}
+
+export function dispatchInTheMiddleOfReducer(state = [], action) {
+  switch (action.type) {
+    case DISPATCH_IN_MIDDLE:
+      action.boundDispatchFn();
+      return state;
+    default:
+      return state;
   }
 }

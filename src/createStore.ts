@@ -48,7 +48,7 @@ export default function createStore<
 
     if (isDispatching) {
       throw new Error(
-        'You may not call store.getState() while the reducer is executing. ' +
+        'You may not call store.subscribe() while the reducer is executing. ' +
           'The reducer has already received the state as an argument. ' +
           'Pass it down from the top reducer instead of reading it from the store.'
       )
@@ -138,7 +138,8 @@ export default function createStore<
     }
     currentReducer = nextReducer as Reducer;
     // replace 之后要生成一下默认值, 这个时候还能拿到之前的 old state;
-    dispatch({ type: ActionTypes.REPLACE } as A);
+    // TODO: undo it, what will do?
+    // dispatch({ type: ActionTypes.REPLACE } as A);
     return store;
   }
 
