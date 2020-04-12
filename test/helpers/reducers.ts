@@ -1,4 +1,4 @@
-import { ADD_TODO, GET_STATE_IN_MIDDLE, SUBSCRIBE_IN_MIDDLE, DISPATCH_IN_MIDDLE } from './actionTypes';
+import { ADD_TODO, GET_STATE_IN_MIDDLE, SUBSCRIBE_IN_MIDDLE, DISPATCH_IN_MIDDLE, THROW_ERROR } from './actionTypes';
 import { AnyAction } from '../../src/types/actions';
 
 function id(state: {id: number}[]) {
@@ -68,6 +68,15 @@ export function dispatchInTheMiddleOfReducer(state = [], action) {
     case DISPATCH_IN_MIDDLE:
       action.boundDispatchFn();
       return state;
+    default:
+      return state;
+  }
+}
+
+export function errorThrowingReducer(state = [], action: AnyAction) {
+  switch (action.type) {
+    case THROW_ERROR:
+      throw new Error();
     default:
       return state;
   }
