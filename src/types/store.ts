@@ -14,3 +14,4 @@ export interface Store<
   subscribe(listener: () => void): Unsubscribe,
   replaceReducer(reducer: Reducer<S, A>): void,
 }
+export type CombinedState<S> = { readonly [$CombinedState]?: undefined } & S
